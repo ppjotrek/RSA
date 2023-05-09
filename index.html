@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorytm RSA</title>
+    <link rel="stylesheet" href="krypto-style.css" />
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="content" id="header">
+        <h1 id="title">Wizualizacja działania algorytmu RSA</h1>
+    </div>
+    <div class="content" id="algorithm-variables">
+        <div class="message" id="input-header">Type you message here: </div>
+        <input type="text" id="input">
+        <button type="button" class="encrypt-button">Encrypt your message!</button>
+        <div class="variable-header">Variables for your encryption:</div>
+        <div class="variable" id="p">p</div>
+        <div class="variable" id="q">q</div>
+        <div class="variable" id="n">n</div>
+        <div class="variable" id="e">Public Key: e</div>
+        <div class="variable" id="d">Private Key: d</div>
+
+        <div class="message" id="encrypted-header">Encrypted message: </div>
+        <div id="encrypted-message">The message will appear here...</div>
+    </div>
+</body>
+</html>
