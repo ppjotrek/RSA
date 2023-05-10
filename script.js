@@ -1,6 +1,17 @@
-window.onload = function(){
+/*window.onload = function(){
   generateKeys();
+}*/
+
+function submit(){ //TODO: osobny przycisk "generate-keys" i osobny "encrypt-button"
+  var keys = generateKeys();
+  var n = keys[0];
+  var e = keys[1];
   var message = document.getElementById("input").value;
+  messageDiv = document.getElementById("encoded-message");
+  ascii = encodeToAscii(message);
+  messageDiv.innerHTML = ascii;
+  encryptedDiv = document.getElementById("encrypted-message");
+  encryptedDiv.innerHTML = "encrypted message"; //TODO: EncodeToAscii zwraca tablicę, osobna funkcja konwertuje ją na stringa, i wyświetla jako kod, a tu dalej przekazywana jest tablica
 }
 
 function generatePrime(){
@@ -53,6 +64,8 @@ function isPrime(x){
 
 function generateKeys(){
 
+  var keysArr = [];
+
   flag = true;
   while(flag){
     p = generatePrime();
@@ -67,6 +80,8 @@ function generateKeys(){
 
   var n = p*q;
 
+  keysArr.push(n);
+
   var fi = (p-1) * (q-1);
   console.log("fi:");
   console.log(fi);
@@ -74,40 +89,58 @@ function generateKeys(){
   flag = true;
 
   while(flag){
-    var e = Math.floor(Math.random() * 10000); //TODO: GCD function, bo to ma być względnie pierwsze z fi
+    var e = Math.floor(Math.random() * 10000);
     if(e < fi)
       if(gcd(e, fi) == 1){
         flag = false;
       }
   }
 
+  keysArr.push(e);
+
   var e_inv = findModInverse(e, fi);
   var d = e_inv % fi;
 
+  keysArr.push(d);
+
   pCell = document.getElementById("p");
-  pCell.innerHTML += " = " + `${p}`;
+  pCell.innerHTML = "p = " + `${p}`;
   qCell = document.getElementById("q");
-  qCell.innerHTML += " = " + `${q}`;
+  qCell.innerHTML = "q = " + `${q}`;
   pCell = document.getElementById("n");
-  pCell.innerHTML += " = " + `${n}`;
+  pCell.innerHTML = "n = " + `${n}`;
   pCell = document.getElementById("e");
-  pCell.innerHTML += " = " + `${e}`;
+  pCell.innerHTML = "Public key: e = " + `${e}`;
   pCell = document.getElementById("d");
-  pCell.innerHTML += " = " + `${d}`;
+  pCell.innerHTML = "Private key: d = " + `${d}`;
 
-  return n, e;
+  return keysArr; //[n, e, d]
 
+}
+
+function encodeToAscii(message){
+
+  var charCodeArr = [];
+  var str = "ASCII of your message is: ";
+
+  for(let i = 0; i < message.length; i++){
+    let code = message.charCodeAt(i);
+    charCodeArr.push(code);
+    str += message.charCodeAt(i);
+    str+= " ";
+  }
+
+  return str;
+  //return charCodeArr;
 }
 
 function encrypt(message, n, e){
 
-  var newMessage = message**(e%n);
+  var eMod = e%n;
 
-  messageDiv = document.getElementById("encrypted-message");
-  messageDiv.innerHTML = newMessage;
+  var newMessage = Math.pow(message, eMod);
 
   return newMessage;
-
 }
 
 function findModInverse(e, phi) {

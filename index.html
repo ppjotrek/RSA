@@ -15,13 +15,16 @@
     <div class="content" id="algorithm-variables">
         <div class="message" id="input-header">Type you message here: </div>
         <input type="text" id="input">
-        <button type="button" class="encrypt-button">Encrypt your message!</button>
+        <button type="button" class="encrypt-button" onclick="submit()">Encrypt your message!</button>
         <div class="variable-header">Variables for your encryption:</div>
         <div class="variable" id="p">p</div>
         <div class="variable" id="q">q</div>
         <div class="variable" id="n">n</div>
         <div class="variable" id="e">Public Key: e</div>
         <div class="variable" id="d">Private Key: d</div>
+
+        <div class="message" id="encoded-header">Message in ASCII: </div>
+        <div id="encoded-message">The message in ASCII will appear here...</div>
 
         <div class="message" id="encrypted-header">Encrypted message: </div>
         <div id="encrypted-message">The message will appear here...</div>
