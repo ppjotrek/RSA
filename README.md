@@ -2,4 +2,9 @@
 RSA algorithm implementation in javascript. Has some nice UI!
 
 
-FOR NOW: displays RSA algorithm variables, will be updated
+FOR NOW: displays RSA algorithm variables, encodes message to ASCII values and encrypts the message with RSA values generated randomly.
+
+TBA:
+
+- decrypting
+- separate generating keys (without encrypting)
