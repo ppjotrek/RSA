@@ -5,13 +5,16 @@
 function submit(){ //TODO: osobny przycisk "generate-keys" i osobny "encrypt-button"
   var keys = generateKeys();
   var n = keys[0];
+  console.log(n);
   var e = keys[1];
+  console.log(e);
   var message = document.getElementById("input").value;
   messageDiv = document.getElementById("encoded-message");
-  ascii = encodeToAscii(message);
-  messageDiv.innerHTML = ascii;
-  encryptedDiv = document.getElementById("encrypted-message");
-  encryptedDiv.innerHTML = "encrypted message"; //TODO: EncodeToAscii zwraca tablicę, osobna funkcja konwertuje ją na stringa, i wyświetla jako kod, a tu dalej przekazywana jest tablica
+  ascii = encodeToAscii(message, "arr");
+  asciiStr = encodeToAscii(message, "string");
+  messageDiv.innerHTML = asciiStr;
+  console.log(ascii);
+  encrypt(ascii, n, e);
 }
 
 function generatePrime(){
@@ -118,7 +121,7 @@ function generateKeys(){
 
 }
 
-function encodeToAscii(message){
+function encodeToAscii(message, mode="arr"){
 
   var charCodeArr = [];
   var str = "ASCII of your message is: ";
@@ -129,18 +132,42 @@ function encodeToAscii(message){
     str += message.charCodeAt(i);
     str+= " ";
   }
-
-  return str;
-  //return charCodeArr;
+  if(mode == "arr"){
+    return charCodeArr;
+  } else if(mode == "string") {
+    return str;
+  }
+  
 }
 
-function encrypt(message, n, e){
+function encrypt(message, n, e) {
+  var result = [];
 
-  var eMod = e%n;
+  encryptedDiv = document.getElementById("encrypted-message");
+  encryptedDiv.innerHTML = "";
 
-  var newMessage = Math.pow(message, eMod);
+  for (var i = 0; i < message.length; i++) {
+    var m = message[i];
+    var encryptedValue = calculateEncryptedValue(m, n, e);
+    result.push(encryptedValue);
+    encryptedDiv.innerHTML += " " + `${encryptedValue}`
+  }
 
-  return newMessage;
+  return result;
+}
+
+function calculateEncryptedValue(message, n, e) {
+  var result = 1;
+
+  while (e > 0) {
+    if (e % 2 === 1) {
+      result = (result * message) % n;
+    }
+    message = (message * message) % n;
+    e = Math.floor(e / 2);
+  }
+
+  return result;
 }
 
 function findModInverse(e, phi) {
@@ -158,7 +185,3 @@ function findModInverse(e, phi) {
   }
   return modInverse;
 }
-
-
-  //var n, e = generateKeys();
-  //encrypt(10, n, e);
