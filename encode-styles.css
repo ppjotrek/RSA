@@ -1,0 +1,108 @@
+body {
+    background-color: #E6E6EA;
+}
+
+#main-page-content {
+    width: 80%;
+    /* Dostosuj szerokość do swoich potrzeb */
+    margin: 0 auto;
+    margin-top: 5%;
+    display: inline-block;
+    margin-left: 8%;
+    font-family: 'Inter', sans-serif;
+
+}
+
+#header {
+    margin: 0 auto;
+    margin-top: 2%;
+    width: 85%;
+    font-family: 'Lexend', sans-serif;
+}
+
+.content-left {
+    float: left;
+    width: 50%;
+    /* Możesz dostosować szerokość diva */
+}
+
+.content-right {
+    float: left;
+    width: 50%;
+    /* Możesz dostosować szerokość diva */
+}
+
+.variable {
+
+    margin-top: 2%;
+
+}
+
+#buttons {
+
+    margin-top: 5%;
+    width: 80%;
+    margin-left: 8%;
+    font-family: 'Inter', sans-serif;
+
+}
+
+.big-button,
+.small-button {
+
+    background-color: #00A5E0;
+    color: white;
+    border: none;
+    text-align: center;
+    transition-duration: 0.6s;
+
+}
+
+.big-button:hover,
+.small-button:hover {
+
+    background-color: #0082B0;
+
+}
+
+.small-button {
+
+    width: 15%;
+    height: 40px;
+    padding: 3px;
+    border-radius: 4px;
+
+}
+
+.big-button {
+
+    width: 30%;
+    height: 50px;
+    border-radius: 10px;
+
+}
+
+#encrypted-message {
+
+    margin-top: 10%;
+
+}
+
+#message-content {
+
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+}
+
+#input {
+
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+}

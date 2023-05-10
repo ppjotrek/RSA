@@ -1,6 +1,27 @@
-/*window.onload = function(){
-  generateKeys();
-}*/
+// JavaScript file with character encoding declaration
+// encoding: utf-8
+
+window.onload = function(){
+
+  console.log("It's alive!");
+
+}
+
+function keys(){
+
+  var keys = generateKeys();
+  pDiv=document.getElementById("p-and-q");
+  pDiv.innerHTML = "Liczby pierwsze P i Q:  " + keys[0] + ", " + keys[1];
+  nDiv=document.getElementById("n");
+  nDiv.innerHTML = "n = p&timesq" + " = " + keys[2];
+  fiDiv=document.getElementById("fi");
+  fiDiv.innerHTML = "&#966; = (p-1)&times(q-1)" + " = " + keys[3];
+  eDiv=document.getElementById("e");
+  eDiv.innerHTML = "e = " + keys[4];
+  pubKeyDiv=document.getElementById("pubkey");
+  pubKeyDiv.innerHTML = "n, e = " + keys[2] + ", " + keys[4];
+
+}
 
 function submit(){ //TODO: osobny przycisk "generate-keys" i osobny "encrypt-button"
   var keys = generateKeys();
@@ -8,13 +29,20 @@ function submit(){ //TODO: osobny przycisk "generate-keys" i osobny "encrypt-but
   console.log(n);
   var e = keys[1];
   console.log(e);
+  var d = keys[2];
+  console.log(d);
   var message = document.getElementById("input").value;
   messageDiv = document.getElementById("encoded-message");
   ascii = encodeToAscii(message, "arr");
   asciiStr = encodeToAscii(message, "string");
   messageDiv.innerHTML = asciiStr;
   console.log(ascii);
-  encrypt(ascii, n, e);
+  encryptedAscii = encrypt(ascii, n, e);
+  decrypted = decrypt(encryptedAscii, n, d);
+  console.log(decrypted);
+  decryptedString = decodeFromAscii(decrypted);
+  console.log(decryptedString);
+  showDecrypted(decryptedString);
 }
 
 function generatePrime(){
@@ -80,6 +108,8 @@ function generateKeys(){
 
   console.log(p);
   console.log(q);
+  keysArr.push(p);
+  keysArr.push(q);
 
   var n = p*q;
 
@@ -88,6 +118,7 @@ function generateKeys(){
   var fi = (p-1) * (q-1);
   console.log("fi:");
   console.log(fi);
+  keysArr.push(fi);
 
   flag = true;
 
@@ -106,18 +137,7 @@ function generateKeys(){
 
   keysArr.push(d);
 
-  pCell = document.getElementById("p");
-  pCell.innerHTML = "p = " + `${p}`;
-  qCell = document.getElementById("q");
-  qCell.innerHTML = "q = " + `${q}`;
-  pCell = document.getElementById("n");
-  pCell.innerHTML = "n = " + `${n}`;
-  pCell = document.getElementById("e");
-  pCell.innerHTML = "Public key: e = " + `${e}`;
-  pCell = document.getElementById("d");
-  pCell.innerHTML = "Private key: d = " + `${d}`;
-
-  return keysArr; //[n, e, d]
+  return keysArr; //[p, q, n, fi, e, d]
 
 }
 
@@ -140,6 +160,19 @@ function encodeToAscii(message, mode="arr"){
   
 }
 
+function decodeFromAscii(asciiArray) {
+  var string = "";
+
+  for (var i = 0; i < asciiArray.length; i++) {
+    var asciiCode = asciiArray[i];
+    var char = String.fromCharCode(asciiCode);
+    string += char;
+  }
+
+  return string;
+}
+
+
 function encrypt(message, n, e) {
   var result = [];
 
@@ -154,6 +187,34 @@ function encrypt(message, n, e) {
   }
 
   return result;
+}
+
+function decrypt(message, n, d){
+
+  var result = [];
+
+  
+
+  for (var i = 0; i < message.length; i++) {
+    var m = message[i];
+    var decryptedValue = calculateEncryptedValue(m, n, d);
+    result.push(decryptedValue);
+  }
+
+  return result;
+
+}
+
+function showDecrypted(message) {
+
+  decryptedDiv = document.getElementById("decrypted-message");
+  decryptedDiv.innerHTML = "";
+  for(let i = 0; i < message.length; i++){
+
+    decryptedDiv.innerHTML += `${message[i]}`;
+
+  }
+
 }
 
 function calculateEncryptedValue(message, n, e) {
