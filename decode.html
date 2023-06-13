@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Algorytm RSA</title>
+        <link rel="stylesheet" href="encode-styles.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter&family=Lexend:wght@600&display=swap" rel="stylesheet">
+        <script src="script.js" charset="UTF-8"></script>
+    </head>
+<body>
+    <div id="header">
+        <h1>
+            <span style="color: #2B3A67;">Wizualizacja algorytmu RSA:</span>
+            <span style="color: #00A5E0;">rozszyfrowywanie</span>
+          </h1>
+          
+    </div>
+    <div id="main-page-content">
+        <div class="content-left">
+            <div class="content" id="variables">
+                <div class="variable" id="privateKey">Klucz prywatny:  </div>
+                <div class="variable" id="n-and-d">n, d</div>
+                <div class="variable" id="message-info">Zaszyfrowana wiadomość: </div>
+                <div class="variable" id="encrypted-message-content"></div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="content" id="encrypted-message">
+                <div id="message-header">Rozszyfrowana wiadomość w kodzie ASCII:</div>
+                <div id="message-ascii">Wiadomość w ASCII pojawi się tutaj...</div>
+                <div id="message-header">Twoja wiadomość rozszyfrowana prywatnym kluczem:</div>
+                <div id="message-content">Wiadomość pojawi się tutaj...</div>
+            </div>
+        </div>
+    </div>
+    <div id="buttons">
+        <div class="content-right" id="button-right">
+            <button type="button" class="big-button" id="decode-button" onclick="decodeMessage()">Rozszyfruj</button>
+        </div>
+        <div class="content-left" id="button-left">
+            <button type="button" class="big-button" id="generate-keys" onclick="redirect('index.html')">Wygeneruj klucze od nowa</button>
+        </div>
+    </div>
+</body>
+</html>
