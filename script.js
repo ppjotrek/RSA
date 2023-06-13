@@ -1,15 +1,30 @@
 // JavaScript file with character encoding declaration
 // encoding: utf-8
+var keys = [];
+var message;
+var encrypted_message;
 
 window.onload = function(){
 
-  console.log("It's alive!");
+  if(window.location.pathname === 'index.html'){
 
+    console.log("It's alive!");
+
+  } else {
+
+    var n = localStorage.getItem('n');
+    var d = localStorage.getItem('d');
+    privKey = document.getElementById('n-and-d');
+    privKey.innerHTML = "n, d: " + n + ", " + d;
+    var encryptedMessageStr = localStorage.getItem('encryptedMessageString');
+    document.getElementById('encrypted-message-content').innerHTML = encryptedMessageStr;
+
+  }
 }
 
-function keys(){
+function initializeKeys(){
 
-  var keys = generateKeys();
+  keys = generateKeys();
   pDiv=document.getElementById("p-and-q");
   pDiv.innerHTML = "Liczby pierwsze P i Q:  " + keys[0] + ", " + keys[1];
   nDiv=document.getElementById("n");
@@ -20,29 +35,53 @@ function keys(){
   eDiv.innerHTML = "e = " + keys[4];
   pubKeyDiv=document.getElementById("pubkey");
   pubKeyDiv.innerHTML = "n, e = " + keys[2] + ", " + keys[4];
+  encodeButton = document.getElementById("encode-button");
+  encodeButton.disabled = false;
+}
+
+function encodeMessage(){
+
+  var input = document.getElementById("input").value;
+  if(input.trim() != ""){
+
+    localStorage.setItem('message', input);
+    asciiDiv = document.getElementById("message-ascii");
+    ascii = encodeToAscii(input, "arr");
+    asciiStr = encodeToAscii(input, "string");
+    asciiDiv.innerHTML = asciiStr;
+    encryptedAscii = encrypt(ascii, keys[2], keys[4]);
+    localStorage.setItem('encryptedMessage', JSON.stringify(encryptedAscii));
+    encryptedAsciiStr = encryptedAscii.join(" ");
+    encryptedDiv = document.getElementById("message-content");
+    encryptedDiv.innerHTML = encryptedAsciiStr;
+    localStorage.setItem('encryptedMessageString', encryptedAsciiStr);
+    decodeButton = document.getElementById("decode-button");
+    decodeButton.disabled = false;
+
+  } else {
+
+    asciiDiv = document.getElementById("message-ascii");
+    asciiDiv.innerHTML = "Nie wpisano wiadomości!";
+
+  }
 
 }
 
-function submit(){ //TODO: osobny przycisk "generate-keys" i osobny "encrypt-button"
-  var keys = generateKeys();
-  var n = keys[0];
-  console.log(n);
-  var e = keys[1];
-  console.log(e);
-  var d = keys[2];
-  console.log(d);
-  var message = document.getElementById("input").value;
-  messageDiv = document.getElementById("encoded-message");
-  ascii = encodeToAscii(message, "arr");
-  asciiStr = encodeToAscii(message, "string");
-  messageDiv.innerHTML = asciiStr;
-  console.log(ascii);
-  encryptedAscii = encrypt(ascii, n, e);
-  decrypted = decrypt(encryptedAscii, n, d);
-  console.log(decrypted);
-  decryptedString = decodeFromAscii(decrypted);
-  console.log(decryptedString);
-  showDecrypted(decryptedString);
+function decodeMessage(){
+
+  var n = localStorage.getItem('n');
+  var d = localStorage.getItem('d');
+  var encryptedMessage = localStorage.getItem('encryptedMessage');
+  encryptedMessage = JSON.parse(localStorage.getItem('encryptedMessage'));
+  console.log(encryptedMessage);
+  decryptedAscii = decrypt(encryptedMessage, n, d);
+  console.log(decryptedAscii);
+  var asciiDiv = document.getElementById('message-ascii');
+  asciiDiv.innerHTML = decryptedAscii.join(" ");
+  decryptedText = decodeFromAscii(decryptedAscii);
+  var messageDiv = document.getElementById("message-content");
+  messageDiv.innerHTML = decryptedText;
+
 }
 
 function generatePrime(){
@@ -137,6 +176,9 @@ function generateKeys(){
 
   keysArr.push(d);
 
+  localStorage.setItem('n', n);
+  localStorage.setItem('d', d);
+
   return keysArr; //[p, q, n, fi, e, d]
 
 }
@@ -144,8 +186,7 @@ function generateKeys(){
 function encodeToAscii(message, mode="arr"){
 
   var charCodeArr = [];
-  var str = "ASCII of your message is: ";
-
+  var str = "";
   for(let i = 0; i < message.length; i++){
     let code = message.charCodeAt(i);
     charCodeArr.push(code);
@@ -176,14 +217,10 @@ function decodeFromAscii(asciiArray) {
 function encrypt(message, n, e) {
   var result = [];
 
-  encryptedDiv = document.getElementById("encrypted-message");
-  encryptedDiv.innerHTML = "";
-
   for (var i = 0; i < message.length; i++) {
     var m = message[i];
     var encryptedValue = calculateEncryptedValue(m, n, e);
     result.push(encryptedValue);
-    encryptedDiv.innerHTML += " " + `${encryptedValue}`
   }
 
   return result;
@@ -192,9 +229,7 @@ function encrypt(message, n, e) {
 function decrypt(message, n, d){
 
   var result = [];
-
   
-
   for (var i = 0; i < message.length; i++) {
     var m = message[i];
     var decryptedValue = calculateEncryptedValue(m, n, d);
@@ -202,18 +237,6 @@ function decrypt(message, n, d){
   }
 
   return result;
-
-}
-
-function showDecrypted(message) {
-
-  decryptedDiv = document.getElementById("decrypted-message");
-  decryptedDiv.innerHTML = "";
-  for(let i = 0; i < message.length; i++){
-
-    decryptedDiv.innerHTML += `${message[i]}`;
-
-  }
 
 }
 
@@ -245,4 +268,8 @@ function findModInverse(e, phi) {
       modInverse += phi;
   }
   return modInverse;
+}
+
+function redirect(path) {
+  window.location.pathname = path;
 }

@@ -1,36 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algorytm RSA</title>
-    <link rel="stylesheet" href="krypto-style.css" />
-    <script src="script.js" charset="UTF-8"></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Algorytm RSA</title>
+        <link rel="stylesheet" href="encode-styles.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter&family=Lexend:wght@600&display=swap" rel="stylesheet">
+        <script src="script.js" charset="UTF-8"></script>
+    </head>
 <body>
-    <div class="content" id="header">
-        <h1 id="title">Wizualizacja działania algorytmu RSA</h1>
+    <div id="header">
+        <h1>
+            <span style="color: #2B3A67;">Wizualizacja algorytmu RSA:</span>
+            <span style="color: #00A5E0;">szyfrowanie</span>
+          </h1>
+          
     </div>
-    <div class="content" id="algorithm-variables">
-        <div class="message" id="input-header">Type you message here: </div>
-        <input type="text" id="input">
-        <button type="button" class="encrypt-button" onclick="submit()">Encrypt your message!</button>
-        <div class="variable-header">Variables for your encryption:</div>
-        <div class="variable" id="p">p</div>
-        <div class="variable" id="q">q</div>
-        <div class="variable" id="n">n</div>
-        <div class="variable" id="e">Public Key: e</div>
-        <div class="variable" id="d">Private Key: d</div>
-
-        <div class="message" id="encoded-header">Message in ASCII: </div>
-        <div id="encoded-message">The message in ASCII will appear here...</div>
-
-        <div class="message" id="encrypted-header">Encrypted message: </div>
-        <div id="encrypted-message">The message will appear here...</div>
-
-        <div class="message" id="decrypted-header">Decrypted message: </div>
-        <div id="decrypted-message">The message will appear here...</div>
+    <div id="main-page-content">
+        <div class="content-left">
+            <div class="content" id="key-variables">
+                <div class="variable" id="p-and-q">Liczby pierwsze P i Q:  </div>
+                <div class="variable" id="n">n = p&timesq</div>
+                <div class="variable" id="euler">Dla takich liczb równanie Eulera wynosi:</div>
+                <div class="variable" id="fi">&#966; = (p-1)&times(q-1)</div>
+                <div class="variable" id="e-message">Wybieramy więc liczbę e mniejszą od &#966; i względnie pierwszą z &#966;:</div>
+                <div class="variable" id="e">e</div>
+                <div class="variable" id="pubkey-message">Więc klucz publiczny jest parą liczb (n, e):</div>
+                <div class="variable" id="pubkey">n, e</div>
+            </div>
+        </div>
+        <div class="content-right">
+            <div class="content" id="input-div">
+            <input type="text" id="input" placeholder="Wpisz swoją wiadomość..." size="50">
+            <button type="button" class="small-button" id="encode-button" onclick="encodeMessage()" disabled>Szyfruj</button>
+            </div>
+            <div class="content" id="encrypted-message">
+                <div id="message-header">Twoja wiadomość przekonwertowana na kod ASCII:</div>
+                <div id="message-ascii">Wiadomość w ASCII pojawi się tutaj...</div>
+                <div id="message-header">Twoja wiadomość zaszyfrowana wygenerowanym publicznym kluczem:</div>
+                <div id="message-content">Wiadomość pojawi się tutaj...</div>
+            </div>
+        </div>
+    </div>
+    <div id="buttons">
+        <div class="content-left" id="button-left">
+            <button type="button" class="big-button" id="generate-keys" onclick="initializeKeys()">Generuj klucze</button>
+        </div>
+        <div class="content-right" id="button-right">
+            <button type="button" class="big-button" id="decode-button" onclick="redirect('decode.html')" disabled>Rozszyfruj</button>
+        </div>
     </div>
 </body>
 </html>

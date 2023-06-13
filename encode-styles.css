@@ -88,7 +88,8 @@ body {
 
 }
 
-#message-content {
+#message-content,
+#message-ascii {
 
     margin-top: 5%;
     margin-bottom: 5%;
