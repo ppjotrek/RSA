@@ -62,6 +62,7 @@ function encodeMessage(){
 
     asciiDiv = document.getElementById("message-ascii");
     asciiDiv.innerHTML = "Nie wpisano wiadomości!";
+    alert("Wpisz wiadomość do zaszyfrowania!");
 
   }
 

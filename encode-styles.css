@@ -65,6 +65,14 @@ body {
 
 }
 
+.big-button:disabled,
+.small-button:disabled {
+
+    background-color: #858585;
+    color: #d8d8d8;
+
+}
+
 .small-button {
 
     width: 15%;
