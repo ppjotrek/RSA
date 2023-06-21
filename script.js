@@ -24,19 +24,31 @@ window.onload = function(){
 
 function initializeKeys(){
 
-  keys = generateKeys();
-  pDiv=document.getElementById("p-and-q");
-  pDiv.innerHTML = "Liczby pierwsze P i Q:  " + keys[0] + ", " + keys[1];
-  nDiv=document.getElementById("n");
-  nDiv.innerHTML = "n = p&timesq" + " = " + keys[2];
-  fiDiv=document.getElementById("fi");
-  fiDiv.innerHTML = "&#966; = (p-1)&times(q-1)" + " = " + keys[3];
-  eDiv=document.getElementById("e");
-  eDiv.innerHTML = "e = " + keys[4];
-  pubKeyDiv=document.getElementById("pubkey");
-  pubKeyDiv.innerHTML = "n, e = " + keys[2] + ", " + keys[4];
-  encodeButton = document.getElementById("encode-button");
-  encodeButton.disabled = false;
+  var rangeLow = document.getElementById("range-low").value;
+  var rangeHigh = document.getElementById("range-high").value;
+  console.log(rangeLow);
+  if (rangeLow == "" || rangeHigh == "") {
+    alert("Wpisz zakres dla liczb P i Q!");
+  } else if(rangeHigh - rangeLow < 10){
+    alert("W zakresie musi być co najmniej 10 liczb!");
+  } else if(rangeHigh == 0){
+    alert("Górna granica nie może wynosić 0!");
+  } else {
+    keys = generateKeys(rangeLow, rangeHigh);
+    pDiv=document.getElementById("p-and-q");
+    pDiv.innerHTML = "Liczby pierwsze P i Q:  " + keys[0] + ", " + keys[1];
+    nDiv=document.getElementById("n");
+    nDiv.innerHTML = "n = p&timesq" + " = " + keys[2];
+    fiDiv=document.getElementById("fi");
+    fiDiv.innerHTML = "&#966; = (p-1)&times(q-1)" + " = " + keys[3];
+    eDiv=document.getElementById("e");
+    eDiv.innerHTML = "e = " + keys[4];
+    pubKeyDiv=document.getElementById("pubkey");
+    pubKeyDiv.innerHTML = "n, e = " + keys[2] + ", " + keys[4];
+    encodeButton = document.getElementById("encode-button");
+    encodeButton.disabled = false;
+  }
+  
 }
 
 function encodeMessage(){
@@ -84,12 +96,12 @@ function decodeMessage(){
 
 }
 
-function generatePrime(){
+function generatePrime(low, high){
 
   flag = true;
   while(flag){
-    var prime = Math.floor(Math.random() * 1000);
-    if(isPrime(prime)){
+    var prime = Math.floor(Math.random() * high);
+    if(isPrime(prime) && prime >= low){
       flag = false;
     }
   }
@@ -132,14 +144,14 @@ function isPrime(x){
 
 }
 
-function generateKeys(){
+function generateKeys(rangeLow, rangeHigh){
 
   var keysArr = [];
 
   flag = true;
   while(flag){
-    p = generatePrime();
-    q = generatePrime();
+    p = generatePrime(rangeLow, rangeHigh);
+    q = generatePrime(rangeLow, rangeHigh);
     if(p != q){
       flag = false;
     }
@@ -162,7 +174,7 @@ function generateKeys(){
   flag = true;
 
   while(flag){
-    var e = Math.floor(Math.random() * 10000);
+    var e = Math.floor(Math.random() * 10000000);
     if(e < fi)
       if(gcd(e, fi) == 1){
         flag = false;
