@@ -8,7 +8,6 @@ WORKDIR /app
 COPY index.html /app
 COPY decode.html /app
 COPY encode-styles.css /app
-COPY krypto-style.css /app
 COPY script.js /app
 
 # Wyeksponuj port 80 w kontenerze
