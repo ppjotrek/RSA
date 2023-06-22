@@ -7,7 +7,7 @@ WORKDIR /app
 # Skopiuj pliki HTML do katalogu roboczego w kontenerze
 COPY index.html /app
 COPY decode.html /app
-COPY encode-styles.css /app
+COPY styles.css /app
 COPY script.js /app
 
 # Wyeksponuj port 80 w kontenerze
