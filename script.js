@@ -29,12 +29,14 @@ function initializeKeys(){
   console.log(rangeLow);
   if (rangeLow == "" || rangeHigh == "") {
     alert("Wpisz zakres dla liczb P i Q!");
-  } else if(rangeHigh < rangeLow){
-    alert("Górna granica zakresu nie może być mniejsza od dolnej!");
+  } else if(rangeHigh <= 0 || rangeLow < 0){
+    alert("Liczby w zakresie muszą być dodatnie!");
+  } else if(rangeHigh - rangeLow < 10){
+    alert("Zakres musi zawierać co najmniej 10 liczb!");
   } else if(rangeHigh == 0){
     alert("Górna granica nie może wynosić 0!");
-  } else if(rangeHigh < 0 || rangeLow <= 0){
-    alert("Liczby w zakresie muszą być dodatnie!");
+  } else if(rangeHigh > 20000){
+    alert("Górna granica zakresu nie może być większa od 20000!");
   } else {
     keys = generateKeys(rangeLow, rangeHigh);
     pDiv=document.getElementById("p-and-q");
