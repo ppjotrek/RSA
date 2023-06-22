@@ -29,10 +29,12 @@ function initializeKeys(){
   console.log(rangeLow);
   if (rangeLow == "" || rangeHigh == "") {
     alert("Wpisz zakres dla liczb P i Q!");
-  } else if(rangeHigh - rangeLow < 10){
-    alert("W zakresie musi być co najmniej 10 liczb!");
+  } else if(rangeHigh < rangeLow){
+    alert("Górna granica zakresu nie może być mniejsza od dolnej!");
   } else if(rangeHigh == 0){
     alert("Górna granica nie może wynosić 0!");
+  } else if(rangeHigh < 0 || rangeLow <= 0){
+    alert("Liczby w zakresie muszą być dodatnie!");
   } else {
     keys = generateKeys(rangeLow, rangeHigh);
     pDiv=document.getElementById("p-and-q");

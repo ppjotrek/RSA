@@ -82,6 +82,13 @@ body {
 
 }
 
+.big-button:disabled, .small-button:disabled {
+    
+        background-color: #E6E6EA;
+        color: #A6A6A6;
+    
+}
+
 #encrypted-message {
 
     margin-top: 10%;
